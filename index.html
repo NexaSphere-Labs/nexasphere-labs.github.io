@@ -4,16 +4,550 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Import Google Fonts link for your HTML <head> -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600&family=Great+Vibes&family=Pacifico&display=swap" rel="stylesheet"> 
         <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-        <link rel="stylesheet" href="nav-style.css">
-        <link rel="stylesheet" href="int-style.css">
-        <link rel="stylesheet" href="foot.css">
-         <link rel="stylesheet" href="responsive.css">
+        <style>
+        
 
+:root {
+  --header-height: clamp(3.5rem, 6vw, 4.5rem);
+  --first-color: #72c2b7;
+  --first-color-lighten: rgba(1, 41, 46, 0.69);
+  --title-color: #a5c8de;
+  --text-color: #596d73;
+  --body-color: #040d12;
+  
+  --body-font: "Poppins", sans-serif;
+  --normal-font-size: clamp(0.875rem, 2vw, 1rem);
+  --small-font-size: clamp(0.75rem, 1.8vw, 0.875rem);
+  --smaller-font-size: clamp(0.7rem, 1.5vw, 0.813rem);
+  
+  --font-medium: 500;
+  --font-semi-bold: 600;
+  --z-tooltip: 10;
+  --z-fixed: 100;
+}
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: var(--body-color);
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100vw;
+  box-shadow: 0 2px 8px hsla(220, 68%, 12%, 0.1);
+  background-color: rgba(12, 35, 38, 0.75);
+  z-index: var(--z-fixed);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+}
+
+.nav__data {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__logo {
+  display: inline-flex;
+  font-family: 'Plus Jakarta Sans', 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+  align-items: center;
+  column-gap: 0.25rem;
+  color: #10B981;
+  font-weight: var(--font-semi-bold);
+  transition: color 0.3s ease;
+}
+
+.nav__logo i {
+  font-size: 1.25rem;
+}
+
+.nav__logo:hover {
+  color: var(--first-color);
+}
+
+.nav__toggle {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.nav__toggle-menu, 
+.nav__toggle-close {
+  font-size: 1.25rem;
+  color: var(--title-color);
+  position: absolute;
+  display: grid;
+  place-items: center;
+  inset: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.4s ease;
+}
+
+.nav__toggle-close {
+  opacity: 0;
+}
+
+
+
+
+.nav__link {
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.show-menu {
+  opacity: 1;
+  top: var(--header-height);
+  pointer-events: initial;
+}
+
+.show-icon .nav__toggle-menu {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+.show-icon .nav__toggle-close {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+
+.dropdown__button {
+  cursor: pointer;
+}
+
+.dropdown__arrow {
+  font-size: 1.25rem;
+  font-weight: initial;
+  transition: transform 0.4s ease;
+}
+
+.dropdown__content, 
+.dropdown__group, 
+.dropdown__list {
+  display: grid;
+}
+
+.dropdown__container {
+  height: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  transition: height 0.4s ease;
+  border-bottom: 1px solid rgba(82, 112, 102, 0.195);
+}
+
+.dropdown__content {
+  row-gap: 1.5rem;
+}
+
+.dropdown__group {
+  padding-left: clamp(1.5rem, 5vw, 2.5rem);
+  row-gap: 0.5rem;
+}
+
+.dropdown__group:first-child {
+  margin-top: 1rem;
+}
+
+.dropdown__group:last-child {
+  margin-bottom: 1rem;
+}
+
+.dropdown__icon i {
+  font-size: 1.25rem;
+  color: var(--first-color);
+}
+
+.dropdown__title {
+  font-size: var(--small-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+}
+
+.dropdown__list {
+  row-gap: 0.35rem;
+}
+
+.dropdown__link {
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-medium);
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.dropdown__link:hover {
+  color: var(--title-color);
+}
+
+.show-dropdown .dropdown__arrow {
+  transform: rotate(180deg);
+}
+
+
+
+                /*init style.css*/
+                a{
+ text-decoration: none;
+}
+.int-container{
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.3rem;
+  color: rgb(207, 239, 229);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  width: 90%;
+  align-items: center;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  padding: 2.5rem;
+  position: relative;
+  top: 7rem;
+  left: 5%;
+ 
+}
+.minit{
+  color: aquamarine;
+  font-family:'Great Vibes', cursive;
+  font-size: 3rem;
+  font-weight: 800;
+ 
+}
+
+.init-2{
+   position: relative;
+   top: 18rem;
+   left: 2rem;
+
+}
+.name{
+  color: rgb(127, 236, 255);
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  
+  
+}
+.all{
+  color: rgb(175, 219, 249);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  width: 90%;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  padding: 2.5rem;
+  margin-top: 2rem;
+}
+.aa{
+  color: #72c2b7;
+  font-size: 1.2rem;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.para{
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin-top: 0.5rem;
+}
+.para1{
+  font-family: Space Grotesk;
+  font-size: 1.2rem;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  padding: 2.5rem;
+  color: rgb(90, 185, 179);
+}
+.name1{
+   color: rgb(127, 236, 255);
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-top: 2rem;
+}
+                /*foot.css*/
+                /* Base Footer Container */
+footer {
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  margin-top: auto; 
+  
+  /* Glassmorphism Styling */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  
+  /* Responsive Padding: smaller on mobile, spacious on desktop */
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(1rem, 3vw, 2.5rem) 1.25rem;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  color: #ffffff;
+}
+
+/* Contact Info Layout Wrapper */
+footer .inf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  max-width: 600px;
+  margin: 0 auto clamp(1.5rem, 3vw, 2.5rem);
+  text-align: center;
+}
+
+/* Cursive Heading "Join with us" */
+footer .inf .nam {
+  font-family: 'Dancing Script', 'Caveat', cursive;
+  font-size: clamp(1.8rem, 4vw, 2.5rem); /* Scales smoothly across viewports */
+  font-weight: 700;
+  color: #38bdf8; /* Sky Blue accent */
+  line-height: 1.2;
+}
+
+/* Contact Item Blocks (Phone & Email) */
+footer .inf .ii {
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  letter-spacing: 0.03em;
+  
+  /* Prevents long emails from breaking screen width on small phones */
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Interactive Hover state for links */
+footer .inf .ii a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+}
+
+footer .inf .ii a:hover {
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Copyright Bottom Bar */
+footer .copyright {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 1.25rem;
+  text-align: center;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.04em;
+}
+                /*res.css*/
+                @media screen and (max-width: 1118px) {
+  .nav__menu {
+    position: absolute;
+    left: 0;
+    top: var(--header-height);
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+    overflow-y: auto;
+    padding-block: 1.5rem 4rem;
+    pointer-events: none;
+    opacity: 0;
+    background-color: rgba(4, 13, 18, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: opacity 0.3s ease, top 0.4s ease;
+  }
+  
+  .nav__menu::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+  
+  .nav__menu::-webkit-scrollbar-thumb {
+    background-color: hsl(220, 12%, 30%);
+    border-radius: 4px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .dropdown__group {
+    padding-left: 1rem;
+  }
+}
+
+
+@media screen and (min-width: 1118px) {
+  .nav {
+    height: calc(var(--header-height) + 1rem);
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .nav__toggle {
+    display: none;
+  }
+  
+  .nav__list {
+    display: flex;
+    column-gap: 2.5rem;
+    height: 100%;
+    align-items: center;
+  }
+  
+  .nav li {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav__link {
+    padding: 0;
+  }
+  
+  .nav__link:hover {
+    background-color: transparent;
+    color: var(--first-color);
+  }
+  
+ 
+  .dropdown__button {
+    column-gap: 0.25rem;
+    pointer-events: initial;
+  }
+  
+  .dropdown__container {
+    height: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 6rem;
+    background-color: rgba(12, 38, 36, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 16px hsla(220, 68%, 12%, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    opacity: 0;
+    transition: top 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .dropdown__content {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    column-gap: 3rem;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding-inline: 2rem;
+  }
+  
+  .dropdown__group {
+    padding: 3rem 0;
+    align-content: baseline;
+    row-gap: 1.25rem;
+  }
+  
+  .dropdown__group:first-child, 
+  .dropdown__group:last-child {
+    margin: 0;
+  }
+  
+  .dropdown__list {
+    row-gap: 0.75rem;
+  }
+  
+  .dropdown__icon {
+    width: 56px;
+    height: 56px;
+    background-color: var(--first-color-lighten);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    margin-bottom: 0.75rem;
+  }
+  
+  .dropdown__icon i {
+    font-size: 1.75rem;
+  }
+  
+  .dropdown__title {
+    font-size: var(--normal-font-size);
+  }
+  
+  .dropdown__link {
+    font-size: var(--small-font-size);
+  }
+  
+  .dropdown__link:hover {
+    color: var(--first-color);
+  }
+  
+  .dropdown__item {
+    cursor: pointer;
+  }
+  
+  .dropdown__item:hover .dropdown__arrow {
+    transform: rotate(180deg);
+  }
+  
+  .dropdown__item:hover > .dropdown__container {
+    top: calc(var(--header-height) + 1rem);
+    opacity: 1;
+    pointer-events: initial;
+  }
+}
+
+        </style>
         <title>Riptide</title>
     </head>
     <body>
@@ -261,45 +795,109 @@
   <div class="copyright">NexaSphereLab Ⓒ 2026 - All Rights Reserved</div>
 </footer>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!---------------------------nav js-------------------------------------->
-        <script src="nav.js"></script>
+        <script >
+
+
+const showMenu = (toggleId, navId) => {
+  const toggle = document.getElementById(toggleId),
+        nav = document.getElementById(navId);
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      // Toggle show-menu class on nav container
+      nav.classList.toggle('show-menu');
+      // Toggle show-icon class to switch menu/close icons
+      toggle.classList.toggle('show-icon');
+    });
+  }
+};
+
+showMenu('nav-toggle', 'nav-menu');
+
+
+const navLinks = document.querySelectorAll('.nav__link');
+
+navLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    const navMenu = document.getElementById('nav-menu'),
+          navToggle = document.getElementById('nav-toggle');
+
+    // Only close if clicking a direct link (not a dropdown toggle button)
+    if (navMenu && navToggle && !link.classList.contains('dropdown__button')) {
+      navMenu.classList.remove('show-menu');
+      navToggle.classList.remove('show-icon');
+    }
+  });
+});
+
+
+const dropdownItems = document.querySelectorAll('.dropdown__item');
+
+dropdownItems.forEach((item) => {
+  const dropdownButton = item.querySelector('.dropdown__button');
+
+  if (dropdownButton) {
+    dropdownButton.addEventListener('click', (e) => {
+     
+      if (window.innerWidth >= 1118) return;
+
+      const showDropdown = document.querySelector('.show-dropdown');
+
+      
+      toggleItem(item);
+
+      
+      if (showDropdown && showDropdown !== item) {
+        toggleItem(showDropdown);
+      }
+    });
+  }
+});
+
+
+const toggleItem = (item) => {
+  const dropdownContainer = item.querySelector('.dropdown__container');
+
+  if (dropdownContainer) {
+    if (item.classList.contains('show-dropdown')) {
+      dropdownContainer.removeAttribute('style');
+      item.classList.remove('show-dropdown');
+    } else {
+      dropdownContainer.style.height = dropdownContainer.scrollHeight + 'px';
+      item.classList.add('show-dropdown');
+    }
+  }
+};
+
+
+const mediaQuery = window.matchMedia('(min-width: 1118px)'),
+      dropdownContainers = document.querySelectorAll('.dropdown__container');
+
+const removeStyle = () => {
+  if (mediaQuery.matches) {
+   
+    dropdownContainers.forEach((container) => {
+      container.removeAttribute('style');
+    });
+
+   
+    dropdownItems.forEach((item) => {
+      item.classList.remove('show-dropdown');
+    });
+
+    
+    const navMenu = document.getElementById('nav-menu'),
+          navToggle = document.getElementById('nav-toggle');
+
+    if (navMenu && navToggle) {
+      navMenu.classList.remove('show-menu');
+      navToggle.classList.remove('show-icon');
+    }
+  }
+};
+
+window.addEventListener('resize', removeStyle);
+        </script>
     </body>
 </html>
