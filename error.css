@@ -1,0 +1,61 @@
+/* =========================================================
+   Riptide – 404.css  (loaded after style.css)
+   404 / "development in progress" page
+   ========================================================= */
+
+.nf { min-height: calc(100vh - var(--header-height) - 7rem); display: grid; place-items: center; padding-block: clamp(2rem, 6vw, 4rem); }
+
+.nf__card {
+  width: 100%; max-width: 720px; text-align: center;
+  padding: clamp(1.5rem, 6vw, 3rem);
+  background: var(--glass); border: 1px solid var(--glass-b); border-radius: 20px;
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .25);
+  animation: fadeUp .9s .15s cubic-bezier(.2, .8, .2, 1) backwards;
+}
+:root[data-theme="light"] .nf__card { box-shadow: 0 8px 28px rgba(15, 118, 110, .15); }
+
+/* big 4 ⚙ 4 */
+.nf__code {
+  display: flex; justify-content: center; align-items: center; gap: clamp(.25rem, 2vw, 1rem);
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: clamp(5rem, 24vw, 9.5rem); line-height: 1;
+}
+.nf__code .d {
+  background: linear-gradient(90deg, var(--red), var(--yellow), var(--green), var(--purple), var(--red));
+  background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+.nf__gear { width: .85em; height: .85em; color: var(--yellow); fill: none; stroke: currentColor; animation: nfSpin 8s linear infinite; }
+.nf__gear .teeth { stroke-width: 12; stroke-dasharray: 14.9 14.9; }
+.nf__gear .ring  { stroke-width: 9; }
+.nf__gear .hub   { fill: currentColor; stroke: none; }
+@keyframes nfSpin { to { transform: rotate(360deg); } }
+
+.nf__badge {
+  display: inline-flex; align-items: center; gap: .5rem; margin-top: 1rem; padding: .35rem .9rem;
+  border-radius: 999px; font-size: var(--small-font-size); font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--yellow); border: 1px solid rgba(var(--yellow-rgb), .5); background: rgba(var(--yellow-rgb), .1);
+}
+.nf__dot { width: .55rem; height: .55rem; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 10px var(--yellow); animation: pulseDot 1.8s ease-in-out infinite; }
+
+.nf__title { margin-top: 1rem; font-size: clamp(1.3rem, 4.6vw, 2rem); line-height: 1.25; color: var(--heading); }
+.nf__text  { margin: .75rem auto 0; max-width: 48ch; color: var(--text-color); }
+
+/* build progress bar */
+.nf__bar { margin: 1.75rem auto 0; max-width: 420px; height: 12px; border-radius: 999px; overflow: hidden; background: var(--glass-b); }
+.nf__bar span {
+  display: block; height: 100%; width: var(--p, 65%); border-radius: inherit;
+  background: repeating-linear-gradient(45deg, var(--yellow) 0 12px, rgba(var(--yellow-rgb), .55) 12px 24px);
+  background-size: 34px 34px;
+  animation: nfFill 1.6s .5s cubic-bezier(.2, .8, .2, 1) backwards, nfStripes 1s linear infinite;
+}
+@keyframes nfFill    { from { width: 0; } }
+@keyframes nfStripes { to { background-position: 34px 0; } }
+.nf__meta { display: block; margin-top: .5rem; font-size: var(--smaller-font-size); color: var(--text-color); }
+
+/* buttons (uses .btn from style.css) */
+.nf__btns { justify-content: center; margin-top: 1.5rem; }
+.btn--c { --hc: var(--yellow); --hc-rgb: var(--yellow-rgb); }
+button.btn { font-family: var(--body-font); cursor: pointer; }
